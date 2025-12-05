@@ -1,0 +1,113 @@
+package com.elexyt.ugflweb.service;
+
+import com.elexyt.ugflweb.entity.GoldRateDaliy;
+import com.elexyt.ugflweb.repository.GoldRateDaliyRepository;
+import com.elexyt.ugflweb.dto.GoldRateDaliyDTO;
+import com.elexyt.ugflweb.mapper.GoldRateDaliyMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+/**
+ * Service Implementation for managing {@link com.elexyt.ugflweb.entity.GoldRateDaliy}.
+ */
+@Service
+@Transactional
+public class GoldRateDaliyService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(GoldRateDaliyService.class);
+
+    private final GoldRateDaliyRepository goldRateDaliyRepository;
+
+    private final GoldRateDaliyMapper goldRateDaliyMapper;
+
+    public GoldRateDaliyService(GoldRateDaliyRepository goldRateDaliyRepository, GoldRateDaliyMapper goldRateDaliyMapper) {
+        this.goldRateDaliyRepository = goldRateDaliyRepository;
+        this.goldRateDaliyMapper = goldRateDaliyMapper;
+    }
+
+    /**
+     * Save a goldRateDaliy.
+     *
+     * @param goldRateDaliyDTO the entity to save.
+     * @return the persisted entity.
+     */
+    public GoldRateDaliyDTO save(GoldRateDaliyDTO goldRateDaliyDTO) {
+        LOG.debug("Request to save GoldRateDaliy : {}", goldRateDaliyDTO);
+        GoldRateDaliy goldRateDaliy = goldRateDaliyMapper.toEntity(goldRateDaliyDTO);
+        goldRateDaliy = goldRateDaliyRepository.save(goldRateDaliy);
+        return goldRateDaliyMapper.toDto(goldRateDaliy);
+    }
+
+    /**
+     * Update a goldRateDaliy.
+     *
+     * @param goldRateDaliyDTO the entity to save.
+     * @return the persisted entity.
+     */
+    public GoldRateDaliyDTO update(GoldRateDaliyDTO goldRateDaliyDTO) {
+        LOG.debug("Request to update GoldRateDaliy : {}", goldRateDaliyDTO);
+        GoldRateDaliy goldRateDaliy = goldRateDaliyMapper.toEntity(goldRateDaliyDTO);
+        goldRateDaliy = goldRateDaliyRepository.save(goldRateDaliy);
+        return goldRateDaliyMapper.toDto(goldRateDaliy);
+    }
+
+    /**
+     * Partially update a goldRateDaliy.
+     *
+     * @param goldRateDaliyDTO the entity to update partially.
+     * @return the persisted entity.
+     */
+    public Optional<GoldRateDaliyDTO> partialUpdate(GoldRateDaliyDTO goldRateDaliyDTO) {
+        LOG.debug("Request to partially update GoldRateDaliy : {}", goldRateDaliyDTO);
+
+        return goldRateDaliyRepository
+            .findById(goldRateDaliyDTO.getGoldRateDaliyId())
+            .map(existingGoldRateDaliy -> {
+                goldRateDaliyMapper.partialUpdate(existingGoldRateDaliy, goldRateDaliyDTO);
+
+                return existingGoldRateDaliy;
+            })
+            .map(goldRateDaliyRepository::save)
+            .map(goldRateDaliyMapper::toDto);
+    }
+
+    /**
+     * Get all the goldRateDaliys.
+     *
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<GoldRateDaliyDTO> findAll() {
+        LOG.debug("Request to get all GoldRateDaliys");
+        return goldRateDaliyRepository.findAll().stream().map(goldRateDaliyMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     * Get one goldRateDaliy by id.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    @Transactional(readOnly = true)
+    public Optional<GoldRateDaliyDTO> findOne(Long id) {
+        LOG.debug("Request to get GoldRateDaliy : {}", id);
+        return goldRateDaliyRepository.findById(id).map(goldRateDaliyMapper::toDto);
+    }
+
+    /**
+     * Delete the goldRateDaliy by id.
+     *
+     * @param id the id of the entity.
+     */
+    public void delete(Long id) {
+        LOG.debug("Request to delete GoldRateDaliy : {}", id);
+        goldRateDaliyRepository.deleteById(id);
+    }
+}

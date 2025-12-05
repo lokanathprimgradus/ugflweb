@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Your One-Time Password (OTP)</title>
+</head>
+<body style="margin:0; padding:0; background-color:#f4f6f9; font-family: Arial, sans-serif; color:#333;">
+<table width="100%" cellpadding="0" cellspacing="0" bgcolor="#f4f6f9">
+    <tr>
+        <td align="center">
+            <table width="600" cellpadding="0" cellspacing="0" bgcolor="#ffffff"
+                   style="border:1px solid #ddd; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+
+                <!-- Header -->
+                <tr>
+                    <td bgcolor="#085b8a" style="padding:16px; text-align:center; color: white;">
+                        <h2 style="margin:0; font-size:22px;" th:text="${client.clientName}"></h2>
+                    </td>
+                </tr>
+
+                <!-- Body -->
+                <tr>
+                    <td style="padding:40px 30px; text-align:left; background-color:#ffffff;">
+
+                        <!-- Greeting -->
+                        <p style="font-size:16px; margin-bottom:16px; color:#333; font-weight:500;">
+                            Hello,
+                        </p>
+
+                        <!-- Introductory message -->
+                        <p style="font-size:15px; line-height:1.7; margin-bottom:20px; color:#555;">
+                            Thank you for choosing
+                            <strong th:text="${client.clientName}"></strong>!
+                            To complete your sign-up process, please verify your email address using the One-Time
+                            Password (OTP) given below.
+                        </p>
+
+                        <!-- OTP Highlight Section -->
+                        <div style="text-align:center; margin:35px 0;">
+                            <h2 style="
+                                display:inline-block;
+                                background:linear-gradient(135deg, #085b8a, #0a6fa5);
+                                color:#ffffff;
+                                padding:14px 32px;
+                                border-radius:8px;
+                                font-size:26px;
+                                letter-spacing:3px;
+                                margin:0;
+                                font-weight:600;
+                                box-shadow:0 3px 8px rgba(0,0,0,0.1);
+                              ">
+                                <span th:text="${Otp}"></span>
+                            </h2>
+                        </div>
+
+                        <!-- Instructions -->
+                        <p style="font-size:15px; line-height:1.7; margin-bottom:16px; color:#555;">
+                            ✅ <strong>This OTP will expire in 5 minutes.</strong><br/>
+                            🔒 <strong>Do not share this OTP</strong> with anyone — not even with company
+                            representatives.<br/>
+                            💡 Enter this OTP on the verification screen to complete your registration.
+                        </p>
+
+                        <!-- Security Note -->
+                        <p style="font-size:14px; color:#777; margin-top:24px; line-height:1.6;">
+                            If you didn’t request this OTP, please ignore this message.
+                            Your account remains secure and no further action is required.
+                        </p>
+
+                    </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                    <td style="border-top:1px solid #eee;"></td>
+                </tr>
+
+                <!-- Company Details -->
+                <tr>
+                    <td style="padding:20px 30px; font-size:13px; color:#555;">
+                        <p style="margin:0 0 8px 0;"><strong>Company Details:</strong></p>
+                        <p style="margin:0;" th:text="${client.clientName}"></p>
+                        <p style="margin:0;">Email: <span th:text="${client.clientEmail}"></span></p>
+                        <p style="margin:0;">Phone: <span th:text="${client.clientPhoneNo}"></span></p>
+                        <p style="margin:0;">Address: <span th:text="${client.clientAddress}"></span></p>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td style="padding:20px; text-align:center; font-size:13px; background-color:#f4f6f9; color:#777;">
+                        <p style="margin:0;">This is an automated message. Please do not reply.</p>
+                        <p style="margin-top:6px; color:#085b8a; font-weight:bold;"
+                           th:text="'Regards, Team ' + ${client.clientShortName}"></p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
