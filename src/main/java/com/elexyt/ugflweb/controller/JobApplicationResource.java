@@ -77,7 +77,7 @@ public class JobApplicationResource {
      */
     @PutMapping("/{jobApplicationId}")
     public ResponseEntity<JobApplicationDTO> updateJobApplication(
-        @PathVariable(value = "jobApplicationId", required = false) final Long jobApplicationId,
+        @PathVariable(value = "jobApplicationId", required = false) final String jobApplicationId,
         @Valid @RequestBody JobApplicationDTO jobApplicationDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to update JobApplication : {}, {}", jobApplicationId, jobApplicationDTO);
@@ -113,7 +113,7 @@ public class JobApplicationResource {
      */
     @PatchMapping(value = "/{jobApplicationId}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<JobApplicationDTO> partialUpdateJobApplication(
-        @PathVariable(value = "jobApplicationId", required = false) final Long jobApplicationId,
+        @PathVariable(value = "jobApplicationId", required = false) final String jobApplicationId,
         @NotNull @RequestBody JobApplicationDTO jobApplicationDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to partial update JobApplication partially : {}, {}", jobApplicationId, jobApplicationDTO);
@@ -154,7 +154,7 @@ public class JobApplicationResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the jobApplicationDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<JobApplicationDTO> getJobApplication(@PathVariable("id") Long id) {
+    public ResponseEntity<JobApplicationDTO> getJobApplication(@PathVariable("id") String id) {
         LOG.debug("REST request to get JobApplication : {}", id);
         Optional<JobApplicationDTO> jobApplicationDTO = jobApplicationService.findOne(id);
         return ResponseUtil.wrapOrNotFound(jobApplicationDTO);
@@ -167,7 +167,7 @@ public class JobApplicationResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteJobApplication(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteJobApplication(@PathVariable("id") String id) {
         LOG.debug("REST request to delete JobApplication : {}", id);
         jobApplicationService.delete(id);
         return ResponseEntity.noContent()

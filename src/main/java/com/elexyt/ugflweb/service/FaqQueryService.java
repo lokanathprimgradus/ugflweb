@@ -97,7 +97,7 @@ public class FaqQueryService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<FaqQueryDTO> findOne(Long id) {
+    public Optional<FaqQueryDTO> findOne(String id) {
         LOG.debug("Request to get FaqQuery : {}", id);
         return faqQueryRepository.findById(id).map(faqQueryMapper::toDto);
     }
@@ -107,7 +107,7 @@ public class FaqQueryService {
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         LOG.debug("Request to delete FaqQuery : {}", id);
         faqQueryRepository.deleteById(id);
     }

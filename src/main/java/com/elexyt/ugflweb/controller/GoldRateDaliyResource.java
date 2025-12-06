@@ -77,7 +77,7 @@ public class GoldRateDaliyResource {
      */
     @PutMapping("/{goldRateDaliyId}")
     public ResponseEntity<GoldRateDaliyDTO> updateGoldRateDaliy(
-        @PathVariable(value = "goldRateDaliyId", required = false) final Long goldRateDaliyId,
+        @PathVariable(value = "goldRateDaliyId", required = false) final String goldRateDaliyId,
         @Valid @RequestBody GoldRateDaliyDTO goldRateDaliyDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to update GoldRateDaliy : {}, {}", goldRateDaliyId, goldRateDaliyDTO);
@@ -113,7 +113,7 @@ public class GoldRateDaliyResource {
      */
     @PatchMapping(value = "/{goldRateDaliyId}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<GoldRateDaliyDTO> partialUpdateGoldRateDaliy(
-        @PathVariable(value = "goldRateDaliyId", required = false) final Long goldRateDaliyId,
+        @PathVariable(value = "goldRateDaliyId", required = false) final String goldRateDaliyId,
         @NotNull @RequestBody GoldRateDaliyDTO goldRateDaliyDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to partial update GoldRateDaliy partially : {}, {}", goldRateDaliyId, goldRateDaliyDTO);
@@ -154,7 +154,7 @@ public class GoldRateDaliyResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the goldRateDaliyDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<GoldRateDaliyDTO> getGoldRateDaliy(@PathVariable("id") Long id) {
+    public ResponseEntity<GoldRateDaliyDTO> getGoldRateDaliy(@PathVariable("id") String id) {
         LOG.debug("REST request to get GoldRateDaliy : {}", id);
         Optional<GoldRateDaliyDTO> goldRateDaliyDTO = goldRateDaliyService.findOne(id);
         return ResponseUtil.wrapOrNotFound(goldRateDaliyDTO);
@@ -167,7 +167,7 @@ public class GoldRateDaliyResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGoldRateDaliy(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteGoldRateDaliy(@PathVariable("id") String id) {
         LOG.debug("REST request to delete GoldRateDaliy : {}", id);
         goldRateDaliyService.delete(id);
         return ResponseEntity.noContent()

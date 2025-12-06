@@ -100,7 +100,7 @@ public class LoanApplicationService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<LoanApplicationDTO> findOne(Long id) {
+    public Optional<LoanApplicationDTO> findOne(String id) {
         LOG.debug("Request to get LoanApplication : {}", id);
         return loanApplicationRepository.findById(id).map(loanApplicationMapper::toDto);
     }
@@ -110,7 +110,7 @@ public class LoanApplicationService {
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         LOG.debug("Request to delete LoanApplication : {}", id);
         loanApplicationRepository.deleteById(id);
     }

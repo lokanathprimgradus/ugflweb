@@ -96,7 +96,7 @@ public class GoldRateDaliyService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<GoldRateDaliyDTO> findOne(Long id) {
+    public Optional<GoldRateDaliyDTO> findOne(String id) {
         LOG.debug("Request to get GoldRateDaliy : {}", id);
         return goldRateDaliyRepository.findById(id).map(goldRateDaliyMapper::toDto);
     }
@@ -106,7 +106,7 @@ public class GoldRateDaliyService {
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         LOG.debug("Request to delete GoldRateDaliy : {}", id);
         goldRateDaliyRepository.deleteById(id);
     }

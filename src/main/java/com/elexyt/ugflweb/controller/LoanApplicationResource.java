@@ -82,7 +82,7 @@ public class LoanApplicationResource {
      */
     @PutMapping("/{loanApplicationId}")
     public ResponseEntity<LoanApplicationDTO> updateLoanApplication(
-        @PathVariable(value = "loanApplicationId", required = false) final Long loanApplicationId,
+        @PathVariable(value = "loanApplicationId", required = false) final String loanApplicationId,
         @Valid @RequestBody LoanApplicationDTO loanApplicationDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to update LoanApplication : {}, {}", loanApplicationId, loanApplicationDTO);
@@ -118,7 +118,7 @@ public class LoanApplicationResource {
      */
     @PatchMapping(value = "/{loanApplicationId}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<LoanApplicationDTO> partialUpdateLoanApplication(
-        @PathVariable(value = "loanApplicationId", required = false) final Long loanApplicationId,
+        @PathVariable(value = "loanApplicationId", required = false) final String loanApplicationId,
         @NotNull @RequestBody LoanApplicationDTO loanApplicationDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to partial update LoanApplication partially : {}, {}", loanApplicationId, loanApplicationDTO);
@@ -159,7 +159,7 @@ public class LoanApplicationResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the loanApplicationDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<LoanApplicationDTO> getLoanApplication(@PathVariable("id") Long id) {
+    public ResponseEntity<LoanApplicationDTO> getLoanApplication(@PathVariable("id") String id) {
         LOG.debug("REST request to get LoanApplication : {}", id);
         Optional<LoanApplicationDTO> loanApplicationDTO = loanApplicationService.findOne(id);
         return ResponseUtil.wrapOrNotFound(loanApplicationDTO);
@@ -172,7 +172,7 @@ public class LoanApplicationResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLoanApplication(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteLoanApplication(@PathVariable("id") String id) {
         LOG.debug("REST request to delete LoanApplication : {}", id);
         loanApplicationService.delete(id);
         return ResponseEntity.noContent()

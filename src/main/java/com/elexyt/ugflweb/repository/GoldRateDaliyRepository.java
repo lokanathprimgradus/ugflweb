@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface GoldRateDaliyRepository extends JpaRepository<GoldRateDaliy, Long> {}
+public interface GoldRateDaliyRepository extends JpaRepository<GoldRateDaliy, String> {}

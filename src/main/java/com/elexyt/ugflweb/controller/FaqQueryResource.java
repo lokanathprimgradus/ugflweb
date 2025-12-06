@@ -74,7 +74,7 @@ public class FaqQueryResource {
      */
     @PutMapping("/{faqQueryId}")
     public ResponseEntity<FaqQueryDTO> updateFaqQuery(
-        @PathVariable(value = "faqQueryId", required = false) final Long faqQueryId,
+        @PathVariable(value = "faqQueryId", required = false) final String faqQueryId,
         @Valid @RequestBody FaqQueryDTO faqQueryDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to update FaqQuery : {}, {}", faqQueryId, faqQueryDTO);
@@ -108,7 +108,7 @@ public class FaqQueryResource {
      */
     @PatchMapping(value = "/{faqQueryId}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<FaqQueryDTO> partialUpdateFaqQuery(
-        @PathVariable(value = "faqQueryId", required = false) final Long faqQueryId,
+        @PathVariable(value = "faqQueryId", required = false) final String faqQueryId,
         @NotNull @RequestBody FaqQueryDTO faqQueryDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to partial update FaqQuery partially : {}, {}", faqQueryId, faqQueryDTO);
@@ -149,7 +149,7 @@ public class FaqQueryResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the faqQueryDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<FaqQueryDTO> getFaqQuery(@PathVariable("id") Long id) {
+    public ResponseEntity<FaqQueryDTO> getFaqQuery(@PathVariable("id") String id) {
         LOG.debug("REST request to get FaqQuery : {}", id);
         Optional<FaqQueryDTO> faqQueryDTO = faqQueryService.findOne(id);
         return ResponseUtil.wrapOrNotFound(faqQueryDTO);
@@ -162,7 +162,7 @@ public class FaqQueryResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFaqQuery(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteFaqQuery(@PathVariable("id") String id) {
         LOG.debug("REST request to delete FaqQuery : {}", id);
         faqQueryService.delete(id);
         return ResponseEntity.noContent()

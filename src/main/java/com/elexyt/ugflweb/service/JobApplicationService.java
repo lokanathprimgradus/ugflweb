@@ -100,7 +100,7 @@ public class JobApplicationService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<JobApplicationDTO> findOne(Long id) {
+    public Optional<JobApplicationDTO> findOne(String id) {
         LOG.debug("Request to get JobApplication : {}", id);
         return jobApplicationRepository.findById(id).map(jobApplicationMapper::toDto);
     }
@@ -110,7 +110,7 @@ public class JobApplicationService {
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         LOG.debug("Request to delete JobApplication : {}", id);
         jobApplicationRepository.deleteById(id);
     }
