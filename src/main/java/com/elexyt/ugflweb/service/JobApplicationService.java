@@ -132,7 +132,6 @@ public class JobApplicationService {
         jobApplication.setIsActive(1);
         jobApplication = jobApplicationRepository.save(jobApplication);
 
-        // 2️⃣ If file exists → upload it
         if (file != null && !file.isEmpty()) {
 
             String uploadDir = "jobApplication/resumes";
@@ -144,7 +143,6 @@ public class JobApplicationService {
 
             file.transferTo(filePath.toFile());
 
-            // Update entity with file path
             jobApplication.setResumePath(filePath.toString());
             jobApplicationRepository.save(jobApplication);
         }

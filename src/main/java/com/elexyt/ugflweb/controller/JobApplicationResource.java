@@ -64,13 +64,13 @@ public class JobApplicationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<JobApplicationDTO> createJobApplication(@Valid @RequestBody JobApplicationDTO jobApplicationDTO)
-        throws URISyntaxException {
+    public ResponseEntity<JobApplicationDTO> createJobApplication(@Valid @ModelAttribute JobApplicationDTO jobApplicationDTO)
+            throws URISyntaxException, IOException {
         LOG.debug("REST request to save JobApplication : {}", jobApplicationDTO);
         if (jobApplicationDTO.getJobApplicationId() != null) {
             throw new BadRequestAlertException("A new jobApplication cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        jobApplicationDTO = jobApplicationService.save(jobApplicationDTO);
+        jobApplicationDTO = jobApplicationService.saveJobMultipart(jobApplicationDTO);
         return ResponseEntity.created(new URI("/api/job-applications/" + jobApplicationDTO.getJobApplicationId()))
             .headers(
                 HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, jobApplicationDTO.getJobApplicationId().toString())
@@ -190,21 +190,21 @@ public class JobApplicationResource {
 
 
 
-    @PostMapping(value = "/upload-resume",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> createJobApplicationWithFile(
-            @ModelAttribute JobApplicationDTO jobApplicationDTO
-    ) throws IOException, URISyntaxException {
-        LOG.debug("REST request to save JobApplication with file : {}", jobApplicationDTO);
-        if (jobApplicationDTO.getJobApplicationId() != null) {
-            throw new BadRequestAlertException("A new jobApplication cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        jobApplicationDTO = jobApplicationService.saveJobMultipart(jobApplicationDTO);
-        return ResponseEntity.created(new URI("/api/job-applications/" + jobApplicationDTO.getJobApplicationId()))
-                .headers(
-                        HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, jobApplicationDTO.getJobApplicationId().toString())
-                )
-                .body(jobApplicationDTO);
-    }
+//    @PostMapping(value = "/upload-resume",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<?> createJobApplicationWithFile(
+//            @ModelAttribute JobApplicationDTO jobApplicationDTO
+//    ) throws IOException, URISyntaxException {
+//        LOG.debug("REST request to save JobApplication with file : {}", jobApplicationDTO);
+//        if (jobApplicationDTO.getJobApplicationId() != null) {
+//            throw new BadRequestAlertException("A new jobApplication cannot already have an ID", ENTITY_NAME, "idexists");
+//        }
+//        jobApplicationDTO = jobApplicationService.saveJobMultipart(jobApplicationDTO);
+//        return ResponseEntity.created(new URI("/api/job-applications/" + jobApplicationDTO.getJobApplicationId()))
+//                .headers(
+//                        HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, jobApplicationDTO.getJobApplicationId().toString())
+//                )
+//                .body(jobApplicationDTO);
+//    }
 
 
     @GetMapping("/{id}/download-resume")
