@@ -2,6 +2,7 @@ package com.elexyt.ugflweb.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -44,7 +45,7 @@ public class JobApplicationDTO implements Serializable {
     @Size(max = 255)
     private String resumePath;
 
-
+    private MultipartFile file;
 
 
 }
