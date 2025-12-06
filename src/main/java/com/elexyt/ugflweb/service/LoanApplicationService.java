@@ -41,6 +41,7 @@ public class LoanApplicationService {
     public LoanApplicationDTO save(LoanApplicationDTO loanApplicationDTO) {
         LOG.debug("Request to save LoanApplication : {}", loanApplicationDTO);
         LoanApplication loanApplication = loanApplicationMapper.toEntity(loanApplicationDTO);
+        loanApplication.setIsActive(1);
         loanApplication = loanApplicationRepository.save(loanApplication);
         return loanApplicationMapper.toDto(loanApplication);
     }

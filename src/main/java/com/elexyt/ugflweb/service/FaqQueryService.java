@@ -42,6 +42,7 @@ public class FaqQueryService {
     public FaqQueryDTO save(FaqQueryDTO faqQueryDTO) {
         LOG.debug("Request to save FaqQuery : {}", faqQueryDTO);
         FaqQuery faqQuery = faqQueryMapper.toEntity(faqQueryDTO);
+        faqQuery.setIsActive(1);
         faqQuery = faqQueryRepository.save(faqQuery);
         return faqQueryMapper.toDto(faqQuery);
     }

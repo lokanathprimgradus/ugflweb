@@ -1,6 +1,7 @@
 package com.elexyt.ugflweb.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,8 @@ public class ValidateOtp {
     private String otpId;
     private String userName;
     private String otp;
+    @NotNull
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 1")
     private int isActive;
 
 }

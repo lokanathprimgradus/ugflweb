@@ -49,7 +49,7 @@ public class LoanApplication implements Serializable {
     private String address;
 
     @NotNull
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active", nullable = false, columnDefinition = "INTEGER DEFAULT 1")
     private Integer isActive;
 
     @Size(max = 100)

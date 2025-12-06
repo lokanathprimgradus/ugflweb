@@ -48,7 +48,7 @@ public class FaqQuery implements Serializable {
     private String message;
 
     @NotNull
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active", nullable = false, columnDefinition = "INTEGER DEFAULT 1")
     private Integer isActive;
 
     @Size(max = 100)

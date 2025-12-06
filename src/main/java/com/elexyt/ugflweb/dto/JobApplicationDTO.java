@@ -14,7 +14,7 @@ import java.util.Objects;
 @Data
 public class JobApplicationDTO implements Serializable {
 
-    @NotNull
+
     private String jobApplicationId;
 
     @Size(max = 255)
@@ -44,18 +44,7 @@ public class JobApplicationDTO implements Serializable {
     @Size(max = 255)
     private String resumePath;
 
-    @NotNull
-    private Integer isActive;
 
-    @Size(max = 100)
-    private String createdBy;
-
-    private LocalDate createdDate;
-
-    @Size(max = 100)
-    private String modifiedBy;
-
-    private LocalDate modifiedDate;
 
 
 }

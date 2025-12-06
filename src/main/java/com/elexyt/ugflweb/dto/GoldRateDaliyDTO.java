@@ -15,9 +15,9 @@ import java.util.Objects;
 @Data
 public class GoldRateDaliyDTO implements Serializable {
 
-    @NotNull
-    private String goldRateDaliyId;
 
+    private String goldRateDaliyId;
+    @NotNull
     private LocalDate date;
 
     @NotNull
@@ -28,22 +28,6 @@ public class GoldRateDaliyDTO implements Serializable {
 
     @NotNull
     private Double price18k;
-
-    @Size(max = 255)
-    private String message;
-
-    @NotNull
-    private Integer isActive;
-
-    @Size(max = 100)
-    private String createdBy;
-
-    private LocalDateTime createdDate;
-
-    @Size(max = 100)
-    private String modifiedBy;
-
-    private LocalDateTime modifiedDate;
 
 
 }

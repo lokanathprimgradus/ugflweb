@@ -15,7 +15,7 @@ import java.util.Objects;
 @Data
 public class FaqQueryDTO implements Serializable {
 
-    @NotNull
+
     private String faqQueryId;
 
     @Size(max = 255)
@@ -24,26 +24,12 @@ public class FaqQueryDTO implements Serializable {
     @NotNull
     private Long phone;
 
-    private LocalDate patchDate;
 
     @Size(max = 255)
     private String subject;
 
     @Size(max = 255)
     private String message;
-
-    @NotNull
-    private Integer isActive;
-
-    @Size(max = 100)
-    private String createdBy;
-
-    private LocalDateTime createdDate;
-
-    @Size(max = 100)
-    private String modifiedBy;
-
-    private LocalDateTime modifiedDate;
 
 
 }

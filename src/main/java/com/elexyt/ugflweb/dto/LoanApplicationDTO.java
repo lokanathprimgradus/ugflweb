@@ -15,7 +15,7 @@ import java.util.Objects;
 @Data
 public class LoanApplicationDTO implements Serializable {
 
-    @NotNull
+
     private String loanApplicationId;
 
     @Size(max = 255)
@@ -33,18 +33,7 @@ public class LoanApplicationDTO implements Serializable {
     @Size(max = 255)
     private String address;
 
-    @NotNull
-    private Integer isActive;
 
-    @Size(max = 100)
-    private String createdBy;
-
-    private LocalDateTime createdDate;
-
-    @Size(max = 100)
-    private String modifiedBy;
-
-    private LocalDateTime modifiedDate;
 
 
 }

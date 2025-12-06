@@ -44,6 +44,7 @@ public class GoldRateDaliyService {
         LOG.debug("Request to save GoldRateDaliy : {}", goldRateDaliyDTO);
         GoldRateDaliy goldRateDaliy = goldRateDaliyMapper.toEntity(goldRateDaliyDTO);
         AuditUtil.setCreated(username,goldRateDaliy);
+        goldRateDaliy.setIsActive(1);
         goldRateDaliy = goldRateDaliyRepository.save(goldRateDaliy);
         return goldRateDaliyMapper.toDto(goldRateDaliy);
     }

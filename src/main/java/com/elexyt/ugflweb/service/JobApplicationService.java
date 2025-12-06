@@ -41,6 +41,7 @@ public class JobApplicationService {
     public JobApplicationDTO save(JobApplicationDTO jobApplicationDTO) {
         LOG.debug("Request to save JobApplication : {}", jobApplicationDTO);
         JobApplication jobApplication = jobApplicationMapper.toEntity(jobApplicationDTO);
+        jobApplication.setIsActive(1);
         jobApplication = jobApplicationRepository.save(jobApplication);
         return jobApplicationMapper.toDto(jobApplication);
     }

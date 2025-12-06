@@ -2,6 +2,7 @@ package com.elexyt.ugflweb.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.Where;
 
@@ -23,6 +24,8 @@ public class ClientMaster {
     private byte[] clientLogo;
     private String clientEmail;
     private String clientPhoneNo;
+    @NotNull
+    @Column( nullable = false, columnDefinition = "INTEGER DEFAULT 1")
     private int isActive;
     private String createdBy;
     private LocalDateTime createdDate;
