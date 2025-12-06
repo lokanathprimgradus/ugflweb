@@ -12,9 +12,9 @@ public class OpenApiConfig {
     public OpenAPI baseOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("My API Documentation")
+                        .title("UNI GOLD API Documentation")
                         .version("1.0.0")
-                        .description("Spring Boot API documentation using SpringDoc OpenAPI"));
+                        .description("Uni Gold Finance Limited API documentation"));
     }
 }
 
