@@ -6,9 +6,15 @@ import com.elexyt.ugflweb.dto.JobApplicationDTO;
 import com.elexyt.ugflweb.mapper.JobApplicationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +26,9 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class JobApplicationService {
+
+    @Value("${app.upload.path}")
+    public String uploadPath;
 
     private static final Logger LOG = LoggerFactory.getLogger(JobApplicationService.class);
 
@@ -115,4 +124,32 @@ public class JobApplicationService {
         LOG.debug("Request to delete JobApplication : {}", id);
         jobApplicationRepository.deleteById(id);
     }
+
+    public JobApplicationDTO saveJobMultipart(JobApplicationDTO jobApplicationDTO) throws IOException {
+        LOG.debug("Request to save JobApplication with file: {}", jobApplicationDTO);
+        MultipartFile file = jobApplicationDTO.getFile();
+        JobApplication jobApplication = jobApplicationMapper.toEntity(jobApplicationDTO);
+        jobApplication.setIsActive(1);
+        jobApplication = jobApplicationRepository.save(jobApplication);
+
+        // 2️⃣ If file exists → upload it
+        if (file != null && !file.isEmpty()) {
+
+            String uploadDir = "jobApplication/resumes";
+            Path fullPath = Paths.get(uploadPath, uploadDir);
+            Files.createDirectories(fullPath);
+
+            String fileName = jobApplication.getJobApplicationId() + "_" + file.getOriginalFilename();
+            Path filePath = fullPath.resolve(fileName);
+
+            file.transferTo(filePath.toFile());
+
+            // Update entity with file path
+            jobApplication.setResumePath(filePath.toString());
+            jobApplicationRepository.save(jobApplication);
+        }
+
+        return jobApplicationMapper.toDto(jobApplication);
+    }
+
 }

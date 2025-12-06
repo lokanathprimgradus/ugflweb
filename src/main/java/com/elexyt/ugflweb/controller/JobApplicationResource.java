@@ -9,13 +9,23 @@ import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,6 +36,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/job-applications")
 public class JobApplicationResource {
+
+    @Value("${app.upload.path}")
+    public String uploadPath;
 
     private static final Logger LOG = LoggerFactory.getLogger(JobApplicationResource.class);
 
@@ -174,4 +187,61 @@ public class JobApplicationResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+
+
+    @PostMapping(value = "/upload-resume",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createJobApplicationWithFile(
+            @ModelAttribute JobApplicationDTO jobApplicationDTO
+    ) throws IOException, URISyntaxException {
+        LOG.debug("REST request to save JobApplication with file : {}", jobApplicationDTO);
+        if (jobApplicationDTO.getJobApplicationId() != null) {
+            throw new BadRequestAlertException("A new jobApplication cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        jobApplicationDTO = jobApplicationService.saveJobMultipart(jobApplicationDTO);
+        return ResponseEntity.created(new URI("/api/job-applications/" + jobApplicationDTO.getJobApplicationId()))
+                .headers(
+                        HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, jobApplicationDTO.getJobApplicationId().toString())
+                )
+                .body(jobApplicationDTO);
+    }
+
+
+    @GetMapping("/{id}/download-resume")
+    public ResponseEntity<Resource> downloadResume(@PathVariable String id) throws IOException {
+        LOG.debug("REST request to get resume for id : {}", id);
+        String uploadDir = "jobApplication/resumes";
+        Path folderPath = Paths.get(uploadPath, uploadDir);
+
+        if (!Files.exists(folderPath)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        File[] matchedFiles = folderPath.toFile().listFiles(
+                (dir, name) -> name.startsWith(id + "_")
+        );
+
+        if (matchedFiles == null || matchedFiles.length == 0) {
+            return ResponseEntity.notFound().build();
+        }
+
+        File file = matchedFiles[0];
+        Path filePath = file.toPath();
+
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(filePath));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(
+                HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=" + file.getName()
+        );
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(file.length())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
+    }
+
+
 }
