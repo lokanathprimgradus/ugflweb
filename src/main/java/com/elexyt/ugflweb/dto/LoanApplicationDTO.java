@@ -28,7 +28,7 @@ public class LoanApplicationDTO implements Serializable {
     private Integer goldPurity;
 
     @NotNull
-    private Integer weight;
+    private Double weight;
 
     @Size(max = 255)
     private String address;

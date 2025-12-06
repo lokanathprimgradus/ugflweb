@@ -42,7 +42,7 @@ public class LoanApplication implements Serializable {
 
     @NotNull
     @Column(name = "weight", nullable = false)
-    private Integer weight;
+    private Double weight;
 
     @Size(max = 255)
     @Column(name = "address", length = 255)
