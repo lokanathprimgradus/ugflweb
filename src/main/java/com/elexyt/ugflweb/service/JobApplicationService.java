@@ -132,7 +132,20 @@ public class JobApplicationService {
         jobApplication.setIsActive(1);
         jobApplication = jobApplicationRepository.save(jobApplication);
 
+        fileUpload(file, jobApplication);
+
+        return jobApplicationMapper.toDto(jobApplication);
+    }
+
+    private void fileUpload(MultipartFile file, JobApplication jobApplication) throws IOException {
         if (file != null && !file.isEmpty()) {
+
+            String contentType = file.getContentType();
+            if (contentType == null || !(contentType.equals("application/pdf") ||
+                    contentType.equals("application/msword") || // .doc
+                    contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))) { // .docx
+                throw new IOException("Only PDF and Word document formats are allowed.");
+            }
 
             String uploadDir = "jobApplication/resumes";
             Path fullPath = Paths.get(uploadPath, uploadDir);
@@ -143,11 +156,9 @@ public class JobApplicationService {
 
             file.transferTo(filePath.toFile());
 
-            jobApplication.setResumePath(filePath.toString());
+            jobApplication.setResumePath(fileName);
             jobApplicationRepository.save(jobApplication);
         }
-
-        return jobApplicationMapper.toDto(jobApplication);
     }
 
 }

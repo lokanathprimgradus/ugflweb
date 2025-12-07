@@ -63,7 +63,7 @@ public class JobApplicationResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new jobApplicationDTO, or with status {@code 400 (Bad Request)} if the jobApplication has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("")
+    @PostMapping(value = "",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<JobApplicationDTO> createJobApplication(@Valid @ModelAttribute JobApplicationDTO jobApplicationDTO)
             throws URISyntaxException, IOException {
         LOG.debug("REST request to save JobApplication : {}", jobApplicationDTO);
