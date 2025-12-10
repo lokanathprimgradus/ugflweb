@@ -3,6 +3,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -43,10 +44,10 @@ public class SecurityConfiguration {
 				.disable()
 				.authorizeHttpRequests()
 				.requestMatchers("/authenticate").permitAll()
-                .requestMatchers("/api/faq-queries").permitAll()
-                .requestMatchers("/api/job-applications").permitAll()
-                .requestMatchers("/api/loan-applications").permitAll()
-				.requestMatchers("/api/gold-rate-daliys/today-rate").permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/faq-queries").permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/job-applications").permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/loan-applications").permitAll()
+				.requestMatchers(HttpMethod.GET,"/api/gold-rate-daliys/today-rate").permitAll()
 				.requestMatchers("/v2/api-docs","/v3/api-docs/**", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**","/swagger-ui/**").permitAll()
 				//.requestMatchers("/registerUser","/sendOtp", "/validateOtp", "/resetPassword", "/event-notice/eventNoticeList", "/event-notice/event-attachment-preview", "/active-member-details", "/uploads/**", "/gallery/all").permitAll()
 				.anyRequest()

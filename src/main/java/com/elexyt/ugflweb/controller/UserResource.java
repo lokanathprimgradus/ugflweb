@@ -169,8 +169,9 @@ public class UserResource {
     }
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Login> getUser(@PathVariable("username") String username) {
+    @GetMapping("/userProfile")
+    public ResponseEntity<Login> getUser(Authentication authentication) {
+        String username = authentication.getName();
         LOG.debug("REST request to get user : {}", username);
         Optional<Login> login = userService.findByUsername(username);
         return ResponseUtil.wrapOrNotFound(login);
